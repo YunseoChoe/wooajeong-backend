@@ -53,7 +53,7 @@ jobs:
     - name: AWS credential 설정
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-regin: ${{ env.AWS_REGION }}
+        aws-region: ${{ env.AWS_REGION }}
         aws-access-key-id: ${{ secrets.CICD_ACCESS_KEY }}
         aws-secret-access-key: ${{ secrets.CICD_SECRET_KEY }}
 
