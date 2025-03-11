@@ -23,7 +23,7 @@ jobs:
           docker build -t capstone .
 
       - name: taging
-        run: docker tag tripmate:latest ${{ secrets.DOCKERHUB_USERNAME }}/capstone:latest
+        run: docker tag capstone:latest ${{ secrets.DOCKERHUB_USERNAME }}/capstone:latest
 
       - name: Push to Dockerhub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/capstone:latest
