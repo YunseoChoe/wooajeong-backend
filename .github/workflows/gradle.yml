@@ -20,7 +20,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build --build-arg -t capstone .
+          docker build -t capstone .
 
       - name: taging
         run: docker tag tripmate:latest ${{ secrets.DOCKERHUB_USERNAME }}/capstone:latest
