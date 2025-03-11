@@ -15,9 +15,9 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  AWS_S3_BUCKET: app-release-files
+  AWS_S3_BUCKET: smu-capstone-s3
   AWS_CODE_DEPLOY_APPLICATION: capstone-CD
-  AWS_CODE_DEPLOY_GROUP: capstone-CD-group
+  AWS_CODE_DEPLOY_GROUP: capstone-CD-group 
 
 jobs:
   build:
@@ -53,12 +53,14 @@ jobs:
     - name: AWS credential 설정
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-regin: ${{ env.AWS_REGION }}
+        aws-region: ${{ env.AWS_REGION }}
         aws-access-key-id: ${{ secrets.CICD_ACCESS_KEY }}
         aws-secret-access-key: ${{ secrets.CICD_SECRET_KEY }}
 
     - name: S3에 업로드
-      run: aws deploy pysh --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --ignore-hidden-files --s3-location s3://$AWS_S3_BUCKET/cicdtest/$GITHUB_SHA.zip --source .
+      run: aws deploy push --application-name capstone-CD --ignore-hidden-files --s3-location s3://smu-capstone-s3/cicdtest/$GITHUB_SHA.zip --source . --region ap-northeast-2
+
+
     - name: EC2에 배포
       run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=$AWS_S3_BUCKET,key=cicdtest/$GITHUB_SHA.zip,bundleType=zip
     
