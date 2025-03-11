@@ -17,7 +17,7 @@ env:
   AWS_REGION: ap-northeast-2
   AWS_S3_BUCKET: smu-capstone-s3
   AWS_CODE_DEPLOY_APPLICATION: capstone-CD
-  AWS_CODE_DEPLOY_GROUP: capstone-CD-group
+  AWS_CODE_DEPLOY_GROUP: capstone-CD-group 
 
 jobs:
   build:
