@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1:1 채팅 테스트</title>
+</head>
+<body>
+<h2>1:1 채팅 테스트</h2>
+
+<label>내 ID: <input type="number" id="myId" placeholder="예: 1"></label><br><br>
+<label>상대 ID: <input type="number" id="otherId" placeholder="예: 2"></label><br><br>
+
+<button onclick="connect()">WebSocket 연결</button>
+
+<div id="chat" style="margin-top: 20px; border: 1px solid gray; padding: 10px; height: 200px; overflow-y: auto;">
+</div>
+
+<input type="text" id="msg" placeholder="메시지 입력">
+<button onclick="send()">전송</button>
+
+<script>
+    let socket;
+    let myId;
+    let otherId;
+
+    function connect() {
+        myId = document.getElementById("myId").value;
+        otherId = document.getElementById("otherId").value;
+
+        socket = new WebSocket(`ws://localhost:8080/ws/chat/${myId}`);
+
+        socket.onopen = () => {
+            appendMsg(`[WebSocket] 연결됨 (나: ${myId})`);
+        };
+
+        socket.onmessage = (event) => {
+            appendMsg(`[상대방 → 나] ${event.data}`);
+        };
+    }
+
+    function send() {
+        const content = document.getElementById("msg").value;
+
+        const msg = {
+            senderId: myId,
+            receiverId: otherId,
+            content: content,
+            sendTime: new Date().toISOString()
+        };
+
+        fetch("/chat/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(msg)
+        }).then(() => {
+            appendMsg(`[나 → 상대방] ${content}`);
+            document.getElementById("msg").value = "";
+        });
+    }
+
+    function appendMsg(message) {
+        const chat = document.getElementById("chat");
+        const p = document.createElement("p");
+        p.textContent = message;
+        chat.appendChild(p);
+        chat.scrollTop = chat.scrollHeight;
+    }
+</script>
+</body>
+</html>

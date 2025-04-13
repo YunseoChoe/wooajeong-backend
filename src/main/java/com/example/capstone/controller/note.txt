@@ -1,0 +1,6 @@
+1. 클라이언트의 WebSocket 연결
+2. 클라이언트 -> 서버: 메세지 전송
+3. 서버(Spring boot)에서 RabbitMQ로 발행 (Producer 역할)
+4. RabbitMQ가 해당 메세지를 Queue에 전달
+5. 서버(Spring boot)가 RabbitMQ에서 메세지를 수신 (Consumer 역할)
+6. 서버가 WebSocket을 통해 수신자에게 메세지 전달

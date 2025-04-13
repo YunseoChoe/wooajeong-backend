@@ -39,6 +39,13 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	// MongoDB 설정
+	implementation ('org.springframework.boot:spring-boot-starter-data-mongodb')
+	// RabbitMQ 설정
+	implementation 'org.springframework.boot:spring-boot-starter-amqp'
+	// WebSocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
 }
 
 tasks.named('test') {
