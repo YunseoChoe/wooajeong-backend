@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Chat Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        #chatBox { border: 1px solid #ccc; height: 300px; overflow-y: auto; margin-bottom: 10px; padding: 10px; }
+        input { margin: 4px; }
+    </style>
+</head>
+<body>
+
+<h2>🧪 WebSocket Chat Client</h2>
+
+<label>User ID (본인):</label>
+<input type="text" id="userId" value="user1"><br>
+
+<label>Receiver ID:</label>
+<input type="text" id="receiverId" value="user2"><br>
+
+<label>Room ID:</label>
+<input type="text" id="roomId" value="room-user1-user2"><br>
+
+<label>Message:</label>
+<input type="text" id="messageInput" placeholder="Type your message"><br>
+
+<label>Send Time (ISO):</label>
+<input type="text" id="sendTime" value=""><br>
+
+<label>읽음 여부 (isRead):</label>
+<select id="isRead">
+    <option value="false" selected>false</option>
+    <option value="true">true</option>
+</select><br>
+
+<button onclick="connect()">Connect</button>
+<button onclick="sendMessage()">Send</button>
+
+<div id="status" style="margin: 10px 0; color: green;"></div>
+
+<div id="chatBox"></div>
+
+<script>
+    let socket;
+
+    function connect() {
+        const userId = document.getElementById('userId').value;
+        socket = new WebSocket(`ws://localhost:8080/ws/chat?userId=${userId}`);
+
+        socket.onopen = () => {
+            document.getElementById('status').innerText = `✅ Connected as ${userId}`;
+        };
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            const chatBox = document.getElementById('chatBox');
+            chatBox.innerHTML += `<div><b>${data.senderId}:</b> ${data.content}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
+
+        socket.onclose = () => {
+            document.getElementById('status').innerText = '❌ Disconnected';
+        };
+
+        // 현재 시간 기본값 자동 채워주기
+        document.getElementById('sendTime').value = new Date().toISOString();
+    }
+
+    function sendMessage() {
+        const message = {
+            senderId: document.getElementById('userId').value,
+            receiverId: document.getElementById('receiverId').value,
+            roomId: document.getElementById('roomId').value,
+            content: document.getElementById('messageInput').value,
+            sendTime: document.getElementById('sendTime').value,
+            isRead: document.getElementById('isRead').value === "true"
+        };
+
+        console.log(JSON.stringify(message));
+
+        socket.send(JSON.stringify(message));
+        document.getElementById('messageInput').value = '';
+    }
+</script>
+
+</body>
+</html>
