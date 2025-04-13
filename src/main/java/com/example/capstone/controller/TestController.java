@@ -1,4 +1,4 @@
 package com.example.capstone.controller;
 
-public class ClassA {
+public class TestController {
 }
