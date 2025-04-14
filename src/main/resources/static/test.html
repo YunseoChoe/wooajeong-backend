@@ -36,6 +36,15 @@
         socket.onmessage = (event) => {
             appendMsg(`[상대방 → 나] ${event.data}`);
         };
+
+        socket.onerror = (error) => {
+            console.error("[WebSocket 오류]", error);
+            appendMsg(`[WebSocket 오류] ${error.message || error}`);
+        };
+
+        socket.onclose = (event) => {
+            appendMsg(`[WebSocket 종료됨] 코드: ${event.code}, 이유: ${event.reason}`);
+        };
     }
 
     function send() {
