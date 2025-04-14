@@ -36,16 +36,27 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
-        // URI에서 userId 추출: /ws/chat/{userId}
-        String path = session.getUri().getPath(); // 예: /ws/chat/1
-        int userId = Integer.parseInt(path.substring(path.lastIndexOf('/') + 1));
+        System.out.println("WebSocket 연결 시도됨: " + session.getUri());
 
-        // 세션 등록
-        sessions.put(userId, session);
+        try {
+            // URI에서 userId 추출: /ws/chat/{userId}
+            String path = session.getUri().getPath(); // 예: /ws/chat/1
+            int userId = Integer.parseInt(path.substring(path.lastIndexOf('/') + 1));
 
-        // 사용자 큐 및 리스너 등록
-        queueManager.declareUserQueue(userId);
-        listenerManager.startListening(userId);
+            // 세션 등록
+            sessions.put(userId, session);
+
+            // 사용자 큐 및 리스너 등록
+            queueManager.declareUserQueue(userId);
+            listenerManager.startListening(userId);
+
+            System.out.println("WebSocket 연결 성공 userId = " + userId);
+        }
+        catch (Exception e) {
+            System.out.println("WebSocket 연결 중 오류 출력: " + e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
     // 메시지를 해당 userId에게 전송
