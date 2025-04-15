@@ -27,7 +27,7 @@
         myId = document.getElementById("myId").value;
         otherId = document.getElementById("otherId").value;
 
-        socket = new WebSocket(`wss://yunseo.store/ws/chat/${myId}`);
+        socket = new WebSocket(`wss://www.yunseo.store/ws/chat/${myId}`);
         // socket = new WebSocket(`ws://localhost:8080/ws/chat/${myId}`);
 
         socket.onopen = () => {
