@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,6 +13,6 @@ public class ChatMessageDto implements Serializable {
     private String senderId;
     private String receiverId;
     private String content;
-    private String sendTime;
+    private LocalDateTime sendTime;
     private Boolean isRead;
 }

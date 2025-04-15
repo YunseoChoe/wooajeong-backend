@@ -24,8 +24,8 @@
     let otherId;
 
     function connect() {
-        myId = document.getElementById("myId").value;
-        otherId = document.getElementById("otherId").value;
+        myId = parseInt(document.getElementById("myId").value, 10);
+        otherId = parseInt(document.getElementById("otherId").value, 10);
 
         socket = new WebSocket(`wss://www.yunseo.store/ws/chat/${myId}`); // "www"를 붙여야 함.
         // socket = new WebSocket(`ws://localhost:8080/ws/chat/${myId}`); // 로컬 전용
@@ -50,15 +50,19 @@
 
     function send() {
         const content = document.getElementById("msg").value;
+        const now = new Date();
+        const formattedTime = now.toISOString().split(".")[0];
 
         const msg = {
             senderId: myId,
             receiverId: otherId,
             roomId: `room-${myId}-${otherId}`, // roomId: [room-1-2]
             content: content,
-            sendTime: new Date().toISOString(),
+            sendTime: formattedTime,
             isRead: false                       // 기본으로 false 처리.
         };
+
+        console.log("전달할 msg 출력: ", msg);
 
         fetch("/chat/send", {
             method: "POST",
