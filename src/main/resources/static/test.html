@@ -27,8 +27,8 @@
         myId = document.getElementById("myId").value;
         otherId = document.getElementById("otherId").value;
 
-        socket = new WebSocket(`wss://www.yunseo.store/ws/chat/${myId}`);
-        // socket = new WebSocket(`ws://localhost:8080/ws/chat/${myId}`);
+        socket = new WebSocket(`wss://www.yunseo.store/ws/chat/${myId}`); // "www"를 붙여야 함.
+        // socket = new WebSocket(`ws://localhost:8080/ws/chat/${myId}`); // 로컬 전용
 
         socket.onopen = () => {
             appendMsg(`[WebSocket] 연결됨 (나: ${myId})`);
@@ -54,8 +54,10 @@
         const msg = {
             senderId: myId,
             receiverId: otherId,
+            roomId: `room-${myId}-${otherId}`, // roomId: [room-1-2]
             content: content,
-            sendTime: new Date().toISOString()
+            sendTime: new Date().toISOString(),
+            isRead: false                       // 기본으로 false 처리.
         };
 
         fetch("/chat/send", {
@@ -64,11 +66,19 @@
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(msg)
-        }).then(() => {
+        }).then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    console.error("서버 응답 오류:", text);
+                });
+            }
             appendMsg(`[나 → 상대방] ${content}`);
             document.getElementById("msg").value = "";
+        }).catch(err => {
+            console.error("네트워크 오류: ", err);
         });
     }
+
 
     function appendMsg(message) {
         const chat = document.getElementById("chat");
