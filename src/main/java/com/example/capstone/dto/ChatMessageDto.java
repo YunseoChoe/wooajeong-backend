@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @Setter
 public class ChatMessageDto implements Serializable {
     private String roomId;
-    private String senderId;
-    private String receiverId;
+    private int senderId;
+    private int receiverId;
     private String content;
     private LocalDateTime sendTime;
     private Boolean isRead;

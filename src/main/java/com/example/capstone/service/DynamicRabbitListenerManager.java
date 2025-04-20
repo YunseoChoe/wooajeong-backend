@@ -62,7 +62,7 @@ public class DynamicRabbitListenerManager {
                 ChatMessageDto dto = objectMapper.readValue(message.getBody(), ChatMessageDto.class);
 
                 // 해당 유저에게 WebSocket을 통해 메시지 전송
-                handler.sendToUser(Integer.parseInt(dto.getReceiverId()), dto);
+                handler.sendToUser(dto.getReceiverId(), dto);
             } catch (IOException e) {
                 e.printStackTrace(); // 에러 로그 출력
             }
