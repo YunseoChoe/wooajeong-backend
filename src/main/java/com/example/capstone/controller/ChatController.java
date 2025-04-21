@@ -43,6 +43,9 @@ public class ChatController {
             entity.setSendTime(msg.getSendTime()); // 또는 LocalDateTime.now()
             entity.setIsRead(msg.getIsRead());
 
+            System.out.println("저장 직전 roomId: " + entity.getRoomId());
+            System.out.println("저장 직전 sendTime: " + entity.getSendTime());
+
             chatMessageRepository.save(entity);
 
             System.out.println("메세지 저장.");
