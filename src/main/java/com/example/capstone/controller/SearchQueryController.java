@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/searches")
@@ -29,5 +30,16 @@ public class SearchQueryController {
     public ResponseEntity<List<SearchQuery>> getAllQueries() {
         List<SearchQuery> queries = searchQueryRepository.findAll();
         return ResponseEntity.ok(queries);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteQuery(@PathVariable String id) {
+        Optional<SearchQuery> query = searchQueryRepository.findById(id);
+        if (query.isPresent()) {
+            searchQueryRepository.deleteById(id);
+            return ResponseEntity.ok("삭제 성공: id = " + id);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
