@@ -18,8 +18,8 @@ public class SearchQuery {
     private String user_id; // 사용자 id
     private String keyword; // 제품 종류
     private String location; // 장소
-    private String brand; // 브랜드
+//    private String brand; // 브랜드
     private String min_price; // 가격 최소값
     private String max_price; // 가격 최대값
-    private String query; // 문장
+//    private String query; // 문장
 }
