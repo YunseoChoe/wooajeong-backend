@@ -19,7 +19,7 @@ public class AuthController {
     @GetMapping("/api/oauth/kakao")
     public ResponseEntity<?> kakaoLogin(@RequestParam String code) throws Exception {
         String clientId = "e0f7c861c1363c8c05d661936397b603";
-        String redirectUri = "https://www.yunseo.store//oauth/kakao/callback";
+        String redirectUri = "https://www.yunseo.store/oauth/kakao/callback";
 
         System.out.println("프론트에서 받은 code: " + code);
 
