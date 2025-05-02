@@ -56,4 +56,15 @@ public class JwtUtil {
             return false; // 유효하지 않으면 false 반환
         }
     }
+
+    // 토큰에서 user_id 추출
+    public Long getUserIdFromToken(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.get("user_id", Long.class);
+    }
 }

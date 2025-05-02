@@ -26,6 +26,7 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
     }
 
+    // 카카오 로그인
     @GetMapping("/api/oauth/kakao")
     public ResponseEntity<?> kakaoLogin(@RequestParam String code) throws Exception {
         // 1. 카카오 access_token 요청
@@ -91,4 +92,54 @@ public class AuthController {
 
         return ResponseEntity.ok(tokens);
     }
+
+    // 회원 정보 반환
+    @GetMapping("/api/user")
+    public ResponseEntity<?> getMyProfile(@RequestHeader("Authorization") String bearerToken) {
+        try {
+            // "Bearer" 제거하여 실제 토큰 추출
+            String token = bearerToken.replace("Bearer ", "").trim();
+
+            // JWT에서 user_id 추출
+            Long userId = jwtUtil.getUserIdFromToken(token);
+            System.out.println("추출한 user_id: " + userId);
+
+            // DB에서 사용자 조회
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("사용자 정보를 찾을 수 없습니다."));
+
+            Map<String, Object> userInfo = new HashMap<>();
+            userInfo.put("user_id", user.getUser_id());
+            userInfo.put("email", user.getEmail());
+            userInfo.put("nickname", user.getNickname());
+
+            return ResponseEntity.ok(userInfo);
+
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("유효하지 않은 토큰입니다.");
+        }
+    }
+
+    // 회원 탈퇴
+    @DeleteMapping("/api/user/delete")
+    public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String bearerToken) {
+        try {
+            String token = bearerToken.replace("Bearer ", "").trim();
+            Long userId = jwtUtil.getUserIdFromToken(token);
+            System.out.println("추출한 user_id: " + userId);
+
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("사용자 정보를 찾을 수 없습니다."));
+
+            userRepository.delete(user);
+            return ResponseEntity.ok("회원탈퇴가 완료되었습니다.");
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("유효하지 않은 토큰입니다.");
+        }
+    }
+
+
+
 }
