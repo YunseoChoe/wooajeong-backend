@@ -10,9 +10,10 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    // 비밀 키 설정
+    // jwt secret key 설정
     private final Key key = Keys.hmacShaKeyFor(
-            "very-secret-key-for-jwt-signing-1234567890123456".getBytes(StandardCharsets.UTF_8)
+            "d7cc232e338c5c8116675f58f731f82d446a2ec0b25bf3a92c915dd8392a1eb43bcee6e4c0576d50c5344fdae3c821cf6a17e516c50ad6f72d95df55e874b23a"
+                    .getBytes(StandardCharsets.UTF_8)
     );
 
     // Access Token 유효 기간: 60분
