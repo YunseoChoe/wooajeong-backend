@@ -31,7 +31,7 @@ public class AuthController {
     public ResponseEntity<?> kakaoLogin(@RequestParam String code) throws Exception {
         // 1. 카카오 access_token 요청
         String clientId = "e0f7c861c1363c8c05d661936397b603";
-        String redirectUri = "http://localhost:3000/login";
+        String redirectUri = "http://localhost:3000/login"; // 프론트 주소.
 //        String redirectUri = "http://localhost:8080/login";
 
         HttpHeaders headers = new HttpHeaders();
