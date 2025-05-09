@@ -32,9 +32,9 @@ public class AuthController {
 
         System.out.println("카카오 로그인 시작.");
         // 1. 카카오 access_token 요청
-        String clientId = "e0f7c861c1363c8c05d661936397b603";
-//        String redirectUri = "https://www.yunseo.store/oauth/kakao/callback";
-        String redirectUri = "http://localhost:8080/oauth/kakao/callback";
+        String clientId = "e0f7c861c1363c8c05d661936397b603"; // REST API KEY
+        String redirectUri = "https://www.yunseo.store/oauth/kakao/callback";
+//        String redirectUri = "http://localhost:8080/oauth/kakao/callback";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
