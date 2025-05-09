@@ -31,7 +31,7 @@ public class ChatController {
             msg.setRoomId(fixedRoomId);
 
             // RabbitMQ로 전송
-            String routingKey = "chat." + msg.getReceiverId();
+            String routingKey = "chat." + msg.getReceiverId(); // 라우팅키 ex: chat.1
             rabbitTemplate.convertAndSend("chat.exchange", routingKey, msg);
 
             // MongoDB에 저장

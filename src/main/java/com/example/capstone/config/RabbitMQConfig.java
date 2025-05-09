@@ -44,4 +44,6 @@ public class RabbitMQConfig {
     public RabbitAdmin amqpAdmin(ConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
+
+
 }
