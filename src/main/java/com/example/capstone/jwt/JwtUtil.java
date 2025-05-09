@@ -13,7 +13,6 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-
     private final Key key = Keys.hmacShaKeyFor(
             // secret key
             "this-is-a-very-secure-secret-key-for-jwt-hs512-usage-and-it-must-be-long".getBytes(StandardCharsets.UTF_8)
