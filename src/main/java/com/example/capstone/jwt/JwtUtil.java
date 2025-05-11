@@ -15,7 +15,8 @@ import java.util.Date;
 public class JwtUtil {
     private final Key key = Keys.hmacShaKeyFor(
             // secret key
-            "this-is-a-very-secure-secret-key-for-jwt-hs512-usage-and-it-must-be-long".getBytes(StandardCharsets.UTF_8)
+//            "secret-key-for-jwt-hs512-usage-and-it-must-be-long".getBytes(StandardCharsets.UTF_8)
+            "secret".getBytes(StandardCharsets.UTF_8)
     );
 
     private final long ACCESS_TOKEN_EXPIRATION = 1000 * 60 * 60;
