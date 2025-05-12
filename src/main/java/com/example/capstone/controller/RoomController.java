@@ -28,11 +28,12 @@ public class RoomController {
     @PostMapping("/make")
     public ResponseEntity<ChatRoom> createRoom(@RequestParam Long productId,
                                                @AuthenticationPrincipal UserDto userDto) {
+        System.out.println("방 만들기 api 시작.");
         Long creatorId = (long) userDto.getUserId(); // 현재 로그인한 사용자의 userId 저장.
 
         ChatRoom room = new ChatRoom();
-//        room.setRoomId(productId); // room_id는 자동 증가로 따로 저장.
-        room.setRoomLink(UUID.randomUUID().toString()); // roomLink
+        room.setRoomId(productId); // room_id는 productId값으로 저장.
+        room.setRoomLink(UUID.randomUUID().toString()); // room_link
         room.setCreatorId(creatorId); // creator_id
         chatRoomRepository.save(room);
 
@@ -49,6 +50,7 @@ public class RoomController {
     // 누구나 입장 가능한 채팅방 링크 조회 (인증 불필요)
     @GetMapping("/join")
     public ResponseEntity<ChatRoom> getRoomByLink(@RequestParam String link) {
+        System.out.println("방 조회 api 시작.");
         ChatRoom room = chatRoomRepository.findByRoomLink(link)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "방을 찾을 수 없습니다."));
 

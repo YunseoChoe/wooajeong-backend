@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Entity
 public class ChatRoom {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가
     private Long roomId;
 
     @Column(unique = true, nullable = false)
