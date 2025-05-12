@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ChatMessageDto implements Serializable {
-    private int roomId;
+    private Long roomId;
     private int senderId;
     private int receiverId;
     private String content;

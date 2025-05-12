@@ -21,44 +21,44 @@ public class ChatController {
         this.chatMessageRepository = chatMessageRepository;
     }
 
-    @PostMapping("/send")
-    public ResponseEntity<?> send(@RequestBody ChatMessageDto msg) {
-        try {
-            System.out.println("채팅 보내기.");
-
-            // roomId 강제 하드 코딩. (ex. 1 -> 2: room-1-2 / 2 -> 1: room-1-2)
-            String fixedRoomId = generateRoomId(msg.getSenderId(), msg.getReceiverId());
-            msg.setRoomId(fixedRoomId);
-
-            // RabbitMQ로 전송
-            String routingKey = "chat." + msg.getReceiverId(); // 라우팅키 ex: chat.1
-            rabbitTemplate.convertAndSend("chat.exchange", routingKey, msg);
-
-            // MongoDB에 저장
-            ChattingContent entity = new ChattingContent();
-            entity.setRoomId(msg.getRoomId());
-            entity.setSenderId(msg.getSenderId());
-            entity.setReceiverId(msg.getReceiverId());
-            entity.setContent(msg.getContent());
-            entity.setSendTime(msg.getSendTime()); // 또는 LocalDateTime.now()
-            entity.setIsRead(msg.getIsRead());
-
-            System.out.println("저장 직전 roomId: " + entity.getRoomId());
-            System.out.println("저장 직전 sendTime: " + entity.getSendTime());
-
-            chatMessageRepository.save(entity);
-
-            System.out.println("메세지 저장.");
-            return ResponseEntity.ok("메시지 전송 및 저장 완료"); // Client로 보내는 메세지.
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();  // 서버 로그에 예외 출력
-            return ResponseEntity
-                    .status(500)
-                    .body("서버 오류로 인해 메시지를 전송하지 못했습니다: " + e.getMessage());
-        }
-    }
+//    @PostMapping("/send")
+//    public ResponseEntity<?> send(@RequestBody ChatMessageDto msg) {
+//        try {
+//            System.out.println("채팅 보내기.");
+//
+//            // roomId 강제 하드 코딩. (ex. 1 -> 2: room-1-2 / 2 -> 1: room-1-2)
+//            String fixedRoomId = generateRoomId(msg.getSenderId(), msg.getReceiverId());
+//            msg.setRoomId(fixedRoomId);
+//
+//            // RabbitMQ로 전송
+//            String routingKey = "chat." + msg.getReceiverId(); // 라우팅키 ex: chat.1
+//            rabbitTemplate.convertAndSend("chat.exchange", routingKey, msg);
+//
+//            // MongoDB에 저장
+//            ChattingContent entity = new ChattingContent();
+//            entity.setRoomId(msg.getRoomId());
+//            entity.setSenderId(msg.getSenderId());
+//            entity.setReceiverId(msg.getReceiverId());
+//            entity.setContent(msg.getContent());
+//            entity.setSendTime(msg.getSendTime()); // 또는 LocalDateTime.now()
+//            entity.setIsRead(msg.getIsRead());
+//
+//            System.out.println("저장 직전 roomId: " + entity.getRoomId());
+//            System.out.println("저장 직전 sendTime: " + entity.getSendTime());
+//
+//            chatMessageRepository.save(entity);
+//
+//            System.out.println("메세지 저장.");
+//            return ResponseEntity.ok("메시지 전송 및 저장 완료"); // Client로 보내는 메세지.
+//
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();  // 서버 로그에 예외 출력
+//            return ResponseEntity
+//                    .status(500)
+//                    .body("서버 오류로 인해 메시지를 전송하지 못했습니다: " + e.getMessage());
+//        }
+//    }
 
     @GetMapping("/messages")
     public ResponseEntity<?> getMessages(@RequestParam String roomId) {

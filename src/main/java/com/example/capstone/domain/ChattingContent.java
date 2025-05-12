@@ -18,7 +18,7 @@ public class ChattingContent {
     @Id
     private String id; // 각 메세지 고유의 id
 
-    private String roomId;
+    private long roomId;
     private int senderId;
     private int receiverId;
     private String content;
