@@ -24,15 +24,14 @@ public class RoomController {
     private final RoomQueueManager roomQueueManager;
     private final ChatMessageConsumer chatMessageConsumer;
 
-    // [POST] /room/make?opponentId=2
-    // 로그인한 사용자가 creator, 상대방은 opponent로 등록
+    // [POST] /room/make?productId=2
     @PostMapping("/make")
     public ResponseEntity<ChatRoom> createRoom(@RequestParam Long productId,
                                                @AuthenticationPrincipal UserDto userDto) {
         Long creatorId = (long) userDto.getUserId(); // 현재 로그인한 사용자의 userId 저장.
 
         ChatRoom room = new ChatRoom();
-        room.setRoomId(productId); // room_id를 productId로 저장.
+//        room.setRoomId(productId); // room_id는 자동 증가로 따로 저장.
         room.setRoomLink(UUID.randomUUID().toString()); // roomLink
         room.setCreatorId(creatorId); // creator_id
         chatRoomRepository.save(room);
