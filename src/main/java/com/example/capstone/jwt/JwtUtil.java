@@ -18,8 +18,8 @@ public class JwtUtil {
             "this-is-a-very-secure-secret-key-for-jwt-hs512-usage-and-it-must-be-long".getBytes(StandardCharsets.UTF_8)
     );
 
-    private final long ACCESS_TOKEN_EXPIRATION = 1000 * 60 * 60;
-    private final long REFRESH_TOKEN_EXPIRATION = 1000 * 60 * 60 * 24 * 7;
+    private final long ACCESS_TOKEN_EXPIRATION = 1000L * 60 * 60 * 24 * 7; // 일주일로 변경
+    private final long REFRESH_TOKEN_EXPIRATION = 1000L * 60 * 60 * 24 * 14; // 2주
 
     public String generateAccessToken(Long user_id, String nickname) {
         return Jwts.builder()

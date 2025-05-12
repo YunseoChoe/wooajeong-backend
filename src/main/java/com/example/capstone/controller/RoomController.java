@@ -18,23 +18,23 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rooms")
+@RequestMapping("/room")
 public class RoomController {
     private final ChatRoomRepository chatRoomRepository;
     private final RoomQueueManager roomQueueManager;
     private final ChatMessageConsumer chatMessageConsumer;
 
-    // [POST] /rooms?opponentId=2
+    // [POST] /room/make?opponentId=2
     // 로그인한 사용자가 creator, 상대방은 opponent로 등록
-    @PostMapping
-    public ResponseEntity<ChatRoom> createRoom(@RequestParam Long opponentId,
+    @PostMapping("/make")
+    public ResponseEntity<ChatRoom> createRoom(@RequestParam Long productId,
                                                @AuthenticationPrincipal UserDto userDto) {
         Long creatorId = (long) userDto.getUserId(); // 현재 로그인한 사용자의 userId 저장.
 
         ChatRoom room = new ChatRoom();
-        room.setCreatorId(creatorId);
-        room.setOpponentId(opponentId);
-        room.setRoomLink(UUID.randomUUID().toString());
+        room.setRoomId(productId); // room_id를 productId로 저장.
+        room.setRoomLink(UUID.randomUUID().toString()); // roomLink
+        room.setCreatorId(creatorId); // creator_id
         chatRoomRepository.save(room);
 
         // 채팅방 단위 큐 생성 및 STOMP 리스너 시작
@@ -46,19 +46,12 @@ public class RoomController {
         return ResponseEntity.ok(room);
     }
 
-    // [GET] /rooms?link=roomLink
-    // 초대 링크로 방 입장 → (초대 받은 사람의) userId 인증 필요
-    @GetMapping(params = "link")
-    public ResponseEntity<ChatRoom> getRoomByLink(@RequestParam String link,
-                                                  @AuthenticationPrincipal UserDto userDto) {
+    // [GET] /room/join?link=roomLink
+    // 누구나 입장 가능한 채팅방 링크 조회 (인증 불필요)
+    @GetMapping("/join")
+    public ResponseEntity<ChatRoom> getRoomByLink(@RequestParam String link) {
         ChatRoom room = chatRoomRepository.findByRoomLink(link)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "방을 찾을 수 없습니다."));
-
-        Long loginUserId = (long) userDto.getUserId();
-        // (초대 받은 사람의) userId와 opponentId가 같아야 함.
-        if (!room.getOpponentId().equals(loginUserId) && !room.getCreatorId().equals(loginUserId)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "이 방에 접근할 권한이 없습니다.");
-        }
 
         return ResponseEntity.ok(room);
     }
