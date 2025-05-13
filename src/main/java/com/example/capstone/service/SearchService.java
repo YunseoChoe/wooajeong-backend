@@ -14,6 +14,7 @@ public class SearchService {
 
     private final SearchRepository repository;
 
+    // 생성
     public void saveSearch(SearchDto dto) {
         Search entity = Search.builder()
                 .userId(dto.getUser_id())
@@ -26,7 +27,13 @@ public class SearchService {
         repository.save(entity);
     }
 
+    // 조회
     public List<Search> getSearchesByUser(String userId) {
         return repository.findByUserId(userId);
+    }
+
+    // 삭제
+    public void deleteById(Long id) {
+        repository.deleteById(id);
     }
 }
