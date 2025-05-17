@@ -37,5 +37,4 @@ public class SearchController {
         service.deleteById(id);
         return ResponseEntity.ok("삭제 완료");
     }
-
 }
