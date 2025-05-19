@@ -38,3 +38,5 @@ out/
 
 # Spring config files (ignore secret config)
 src/main/resources/application.properties
+
+.env
