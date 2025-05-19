@@ -21,10 +21,10 @@ jobs:
       - name: Build the Docker image
         run: |
           docker build \
-            --build-arg MYSQL_DATABASE_URL=${{ secrets.MYSQL_DATABASE_URL }} \
-            --build-arg MYSQL_DATABASE_USERNAME=${{ secrets.MYSQL_DATABASE_USERNAME }} \
-            --build-arg MYSQL_DATABASE_PASSWORD=${{ secrets.MYSQL_DATABASE_PASSWORD }} \
-            --build-arg MONGODB_URI=${{ secrets.MONGODB_URI }} \
+            --build-arg MYSQL_DATABASE_URL='${{ secrets.MYSQL_DATABASE_URL }}' \
+            --build-arg MYSQL_DATABASE_USERNAME='${{ secrets.MYSQL_DATABASE_USERNAME }}' \
+            --build-arg MYSQL_DATABASE_PASSWORD='${{ secrets.MYSQL_DATABASE_PASSWORD }}' \
+            --build-arg MONGODB_URI='${{ secrets.MONGODB_URI }}' \
             -t capstone .
 
       - name: taging
