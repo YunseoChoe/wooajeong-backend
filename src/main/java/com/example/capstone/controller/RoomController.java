@@ -46,7 +46,7 @@ public class RoomController {
         return ResponseEntity.ok(room);
     }
 
-    // [GET] /room/join?link=roomLink
+    // [GET] /room/join?link=roomLink.
     // 누구나 입장 가능한 채팅방 링크 조회 (인증 불필요)
     @GetMapping("/join")
     public ResponseEntity<ChatRoom> getRoomByLink(@RequestParam String link) {
