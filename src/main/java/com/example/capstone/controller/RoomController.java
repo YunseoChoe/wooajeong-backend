@@ -65,5 +65,6 @@ public class RoomController {
         List<ChatRoom> rooms = chatRoomRepository.findAllByCreatorIdOrOpponentId(userId, userId);
         return ResponseEntity.ok(rooms);
     }
+
 }
 
