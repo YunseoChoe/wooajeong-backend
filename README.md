@@ -16,12 +16,11 @@
 ### 1. 서비스 목표
 개인 간 중고 거래에서는 사기, 허위 광고, 상품 미수령 등으로 인한 피해가 빈번하게 발생하고, 거래 상대방의 신뢰성을 확인하기 어렵습니다. <br>
 또한 시세 정보가 불투명하여 합리적인 가격 판단이 어렵고, 대부분 사용자가 현장 직거래만 선호하면서 거래 편의성이 제한됩니다. <br>
-이러한 구조적 한계로 인해 안전하고 편리한 중고 거래 환경에 대한 수요가 지속적으로 증가하고 있습니다.
+따라서 해당 플랫폼으로 안전하고 신뢰할 수 있으며 편리한 개인 간 중고 거래 환경을 제공하고자 합니다.
 
 ### 2. 기능 및 특징
 
 본 서비스는 블록체인과 MCP(Model Context Protocol) 기반 기술을 활용하여 안전하고 편리한 중고 거래 환경을 제공합니다.  
-주요 기능은 다음과 같습니다.
 
 1. **중고 매물 검색 (MCP 기반)**  
    - MCP를 활용하여 상품 시세와 사용자의 선호를 고려한 맞춤형 검색 제공
@@ -41,7 +40,22 @@
 
 ## 📹 Demo
 
+<details>
+  <summary>👀 Look!</summary>
 
+- **매물 검색, 관심 매물 등록 및 알림**  
+
+  ![search_gif](https://github.com/user-attachments/assets/0c25591a-f192-4db0-a934-69413e501fb5)
+
+- **구매자 & 판매자 실시간 채팅**  
+
+  ![chatting_gif](https://github.com/user-attachments/assets/8b7701d8-e6bb-415e-9997-47b76ca9f0fb)
+
+- **USDT 충전**  
+
+  ![search_notice_gif](https://github.com/user-attachments/assets/0b58e940-9df4-4d55-9e1d-3c3fcadbde1b)
+
+</details>
 
 ## 🛠️ Tech Stack
 Backend|Security|Database|Deployment|Other|
@@ -57,7 +71,8 @@ Backend|Security|Database|Deployment|Other|
 
 
 ## 💻 Architecture
-<img width="2880" height="1619" alt="시스템아키텍처" src="https://github.com/user-attachments/assets/e1143a8c-b9b1-4559-a1dd-056d4b0c700b" />
+<img width="2880" height="1619" alt="시스템아키텍처" src="https://github.com/user-attachments/assets/629c365e-065b-4ebf-9022-fbcb6e42f648" />
+
 
 <!--
 ## 📕 API 
@@ -65,4 +80,4 @@ Backend|Security|Database|Deployment|Other|
 -->
 
 ## 🗂️ Database
-<img width="1090" height="376" alt="image" src="https://github.com/user-attachments/assets/3e9aa2b3-a98f-4737-af41-27ece481f10e" />
+<img width="1090" height="376" alt="image" src="https://github.com/user-attachments/assets/f1ca38de-59ed-475e-a8fe-63a3a9d873f4" />
